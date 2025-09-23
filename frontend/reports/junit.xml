@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="0" failures="0" errors="0" time="0">
+    <testsuite name="apps/frontend/src/app/app.spec.ts" timestamp="2025-09-23T12:02:49.300Z" hostname="bluefin" tests="0" failures="0" errors="0" skipped="0" time="0">
+    </testsuite>
+    <testsuite name="apps/frontend-e2e/src/example.spec.ts" timestamp="2025-09-23T12:02:49.301Z" hostname="bluefin" tests="0" failures="0" errors="0" skipped="0" time="0">
+    </testsuite>
+    <testsuite name="apps/frontend/src/app/app.spec.ts" timestamp="2025-09-23T12:02:49.302Z" hostname="bluefin" tests="0" failures="0" errors="0" skipped="0" time="0">
+    </testsuite>
+</testsuites>

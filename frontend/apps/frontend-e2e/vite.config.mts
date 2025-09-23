@@ -13,7 +13,7 @@ export default defineConfig((config) => ({
   //  plugins: [ nxViteTsPaths() ],
   // },
   test: {
-    name: 'fe',
+    name: 'fe-e2e',
     watch: true,
     globals: true,
     environment: 'happy-dom',
@@ -23,6 +23,11 @@ export default defineConfig((config) => ({
     coverage: {
       reportsDirectory: '../../coverage/apps/frontend',
       provider: 'v8' as const,
+    },
+    browser: {
+      enabled: true,
+      provider: 'playwright',
+      instances: [{ browser: 'chrome' }],
     },
   },
   define: {

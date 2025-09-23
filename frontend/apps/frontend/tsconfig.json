@@ -11,7 +11,8 @@
     "isolatedModules": true,
     "emitDecoratorMetadata": false,
     "module": "preserve",
-    "types": ["vitest/importMeta"]
+    "types": ["vitest/importMeta"],
+    "noUncheckedIndexedAccess": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

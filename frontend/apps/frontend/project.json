@@ -15,8 +15,11 @@
     "lint": {
       "executor": "@nx/eslint:lint"
     },
-    "gen:api":{
+    "gen:api": {
       "command": "npx openapi-typescript ../../../v1.yaml -o ./src/api/v1.d.ts"
+    },
+    "test:ci": {
+      "command": "vitest run --reporter=default --reporter=junit --outputFile=reports/junit.xml"
     },
     "serve-static": {
       "continuous": true,
