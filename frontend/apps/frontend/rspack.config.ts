@@ -18,7 +18,7 @@ export default createConfig(
           glob: '**/*',
           input: './public',
         },
-        './public/mockServiceWorker.js',
+        // './public/mockServiceWorker.js',
       ],
       styles: ['./src/styles.scss'],
       devServer: {},

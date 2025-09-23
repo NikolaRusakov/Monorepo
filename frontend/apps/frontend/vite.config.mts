@@ -12,6 +12,7 @@ export default defineConfig((config) => ({
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
   // },
+  optimizeDeps: { exclude: ['fsevents'] },
   test: {
     name: 'fe',
     watch: true,
@@ -23,6 +24,11 @@ export default defineConfig((config) => ({
     coverage: {
       reportsDirectory: '../../coverage/apps/frontend',
       provider: 'v8' as const,
+    },
+    browser: {
+      enabled: true,
+      provider: 'playwright',
+      instances: [{ browser: 'chromium' }],
     },
   },
   define: {

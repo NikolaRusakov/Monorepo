@@ -1,4 +1,6 @@
 /// <reference types='vitest' />
+/// <reference types="@vitest/browser/providers/playwright" />
+
 import { defineConfig } from 'vite';
 import angular from '@analogjs/vite-plugin-angular';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
@@ -12,6 +14,7 @@ export default defineConfig((config) => ({
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
   // },
+  optimizeDeps: { exclude: ['fsevents'] },
   test: {
     name: 'fe-e2e',
     watch: true,
@@ -27,7 +30,7 @@ export default defineConfig((config) => ({
     browser: {
       enabled: true,
       provider: 'playwright',
-      instances: [{ browser: 'chrome' }],
+      instances: [{ browser: 'chromium' }],
     },
   },
   define: {
