@@ -1,0 +1,43 @@
+{
+  "name": "backoffice_core",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/backoffice_core/src",
+  "tags": [],
+  "targets": {
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "backoffice_core:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "defaultConfiguration": "production",
+      "options": {
+        "buildTarget": "backoffice_core:build",
+        "port": 4201,
+        "watch": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "backoffice_core:build:development"
+        },
+        "production": {
+          "buildTarget": "backoffice_core:build:production"
+        }
+      }
+    },
+    "serve": {
+      "options": {
+        "port": 4201
+      },
+      "dependsOn": ["host:serve"]
+    }
+  }
+}

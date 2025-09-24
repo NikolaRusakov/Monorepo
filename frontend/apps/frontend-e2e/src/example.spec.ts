@@ -1,8 +1,13 @@
-import { test, expect } from '@playwright/test';
+// import { test, expect } from '@playwright/test';
+import { page } from '@vitest/browser/context';
 
-test('has title', async ({ page }) => {
-  await page.goto('/');
+import { describe, expect, it, test } from 'vitest';
 
-  // Expect h1 to contain a substring.
-  expect(await page.locator('h1').innerText()).toContain('Welcome');
+describe('app page', async (/* { page } */) => {
+  it('has title', async () => {
+    await page.goto('/');
+
+    // Expect h1 to contain a substring.
+    expect(await page.locator('h1').innerText()).toContain('Welcome');
+  });
 });
