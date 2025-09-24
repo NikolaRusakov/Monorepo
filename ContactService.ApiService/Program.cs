@@ -1,4 +1,3 @@
-
 // using ContactService.ApiService;
 // using ContactService.ApiService.Controllers;
 
@@ -18,6 +17,7 @@ builder.Services.AddCarter();
 builder.Services.AddScoped<IContactService, ContactServiceImpl>();
 
 builder.Services.AddControllers();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -26,13 +26,12 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy =>
-    {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
+	options.AddDefaultPolicy(policy =>
+	{
+		policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+	});
 });
+
 // builder.Services.AddCarter(configurator: c =>
 //     {
 //         c.WithResponseNegotiator<CustomResponseNegotiator>();
@@ -44,9 +43,9 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
-    app.UseSwagger();
-    app.UseSwaggerUI();
+	app.MapOpenApi();
+	app.UseSwagger();
+	app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
@@ -57,12 +56,13 @@ app.MapControllers();
 
 app.UseCors();
 app.MapCarter();
+
 // app.MapDefaultEndpoints();
 
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider.GetRequiredService<ContactsDbContext>();
-    context.Database.EnsureCreated();
+	var context = scope.ServiceProvider.GetRequiredService<ContactsDbContext>();
+	context.Database.EnsureCreated();
 }
 
 app.Run();

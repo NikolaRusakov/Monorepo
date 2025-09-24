@@ -1,21 +1,19 @@
-using Grpc.Core;
 using ContactSyncService;
+using Grpc.Core;
 
 namespace ContactSyncService.Services;
 
 public class GreeterService : Greeter.GreeterBase
 {
-    private readonly ILogger<GreeterService> _logger;
-    public GreeterService(ILogger<GreeterService> logger)
-    {
-        _logger = logger;
-    }
+	private readonly ILogger<GreeterService> _logger;
 
-    public override Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
-    {
-        return Task.FromResult(new HelloReply
-        {
-            Message = "Hello " + request.Name
-        });
-    }
+	public GreeterService(ILogger<GreeterService> logger)
+	{
+		_logger = logger;
+	}
+
+	public override Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
+	{
+		return Task.FromResult(new HelloReply { Message = "Hello " + request.Name });
+	}
 }

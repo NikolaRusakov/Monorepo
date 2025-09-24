@@ -1,8 +1,17 @@
 var builder = DistributedApplication.CreateBuilder(args);
-var apiService = builder.AddProject<Projects.ContactService_ApiService>("contactservice");
+
+var data = builder.AddAzurePostgresFlexibleServer("data").RunAsContainer();
+
+// builder.AddProject<Projects.ContactService_ApiService>()
+//     .WithReference(data);
+
+builder.Build().Run();
+var apiService = builder
+	.AddProject<Projects.ContactService_ApiService>("contactservice")
+	.WithReference(data);
 
 // builder.AddProject<Projects.AspireApp1_ApiService>("apiservice");
 //        .WithReference(postgresdb)
 //        .WaitForCompletion(migration);
-       
+
 builder.Build().Run();
