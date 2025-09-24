@@ -5,7 +5,6 @@ var data = builder.AddAzurePostgresFlexibleServer("data").RunAsContainer();
 // builder.AddProject<Projects.ContactService_ApiService>()
 //     .WithReference(data);
 
-builder.Build().Run();
 var apiService = builder
 	.AddProject<Projects.ContactService_ApiService>("contactservice")
 	.WithReference(data);
