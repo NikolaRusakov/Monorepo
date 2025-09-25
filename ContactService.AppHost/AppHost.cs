@@ -1,6 +1,20 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var data = builder.AddAzurePostgresFlexibleServer("data").RunAsContainer();
+
+
+var postgres = builder.AddPostgres("postgres"/* , username, password */)
+                      .WithPgAdmin(pgAdmin => pgAdmin.WithHostPort(5050)); ;
+var databaseName = "contactsdb";
+
+var creationScript = $$"""
+    -- Create the database
+    CREATE DATABASE {{databaseName}};
+
+    """;
+
+var db = postgres.AddDatabase(databaseName)
+                 .WithCreationScript(creationScript);
+
 var infra = "infrastructure";
 var minio = builder.AddContainer("minio", "minio/minio:latest")
     .WithEnvironment("MINIO_ROOT_USER", "minioadmin")
@@ -10,15 +24,16 @@ var minio = builder.AddContainer("minio", "minio/minio:latest")
     .WithHttpEndpoint(9001, 9001, name: "console");
 
 
-var verdaccio = builder.AddDockerfile("verdaccio", $"{infra}/verdaccio", "Dockerfile")
+var verdaccioImage = builder.AddDockerfile("my-verdaccio", $"{infra}/verdaccio", "Dockerfile")
+    .WithBuildArg("platform", "linux/arm64")
     .WithEnvironment("VERDACCIO_PORT", "4873")
     .WithHttpEndpoint(port: 4873, targetPort: 4873, name: "verdaccio")
-    .WithVolume($"{infra}/verdaccio/conf", "/verdaccio/conf'");
+    .WithLifetime(ContainerLifetime.Persistent);
 
 var apiService = builder
     .AddProject<Projects.ContactService_ApiService>("contactservice")
     .WithHttpHealthCheck("/health")
-    .WithReference(data)
-    .WaitFor(data);
+    .WithReference(db)
+    .WaitFor(db);
 
 builder.Build().Run();

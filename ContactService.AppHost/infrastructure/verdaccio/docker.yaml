@@ -14,7 +14,7 @@
 # https://verdaccio.org/docs/best
 
 # path to a directory with all packages
-storage: /verdaccio/storage/data
+storage: /verdaccio/storage
 # path to a directory with plugins to include
 plugins: /verdaccio/plugins
 
@@ -74,14 +74,14 @@ uplinks:
 # https://verdaccio.org/docs/protect-your-dependencies/
 # https://verdaccio.org/docs/configuration#packages
 packages:
-  '@*/*':
+  "@*/*":
     # scoped packages
     access: $all
     publish: $authenticated
     unpublish: $authenticated
     proxy: npmjs
 
-  '**':
+  "**":
     # allow all users (including non-authenticated users) to read and
     # publish all packages
     #

@@ -20,18 +20,17 @@ public class ContactsDbContext : DbContext
 		{
 			entity.HasKey(e => e.Id);
 
-			entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+			entity.Property(e => e.CreatedAt).HasDefaultValueSql("NOW() AT TIME ZONE 'utc'");
 
-			entity.Property(e => e.UpdatedAt).HasDefaultValueSql("GETUTCDATE()");
-
+			entity.Property(e => e.UpdatedAt).HasDefaultValueSql("NOW() AT TIME ZONE 'utc'");
 			// Configure complex types
-			entity.ComplexProperty(e => e.Language);
-			entity.ComplexProperty(e => e.Organization);
-			entity.ComplexProperty(e => e.Address);
-			entity.ComplexProperty(e => e.Email);
-			entity.ComplexProperty(e => e.Geography);
-			entity.ComplexProperty(e => e.PublicKey);
-			entity.ComplexProperty(e => e.Url);
+			entity.ComplexProperty(e => e.Language).IsRequired();
+			entity.ComplexProperty(e => e.Organization).IsRequired();
+			entity.ComplexProperty(e => e.Address).IsRequired();
+			entity.ComplexProperty(e => e.Email).IsRequired();
+			entity.ComplexProperty(e => e.Geography).IsRequired();
+			entity.ComplexProperty(e => e.PublicKey).IsRequired();
+			entity.ComplexProperty(e => e.Url).IsRequired();
 
 			// Configure one-to-many relationship with Telephones
 			entity
@@ -46,7 +45,15 @@ public class ContactsDbContext : DbContext
 		{
 			entity.HasKey(e => e.Id);
 
-			entity.Property(e => e.Types).HasColumnType("nvarchar(max)");
+			entity.Property(e => e.Types).HasColumnType("varchar(255)");
 		});
+	}
+
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+	{
+		if (!optionsBuilder.IsConfigured)
+		{
+			optionsBuilder.UseNpgsql("contactsdb"); // This is looking for a connection string named "contactsdb"
+		}
 	}
 }
