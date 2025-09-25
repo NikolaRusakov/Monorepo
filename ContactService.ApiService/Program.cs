@@ -1,16 +1,14 @@
-// using ContactService.ApiService;
-// using ContactService.ApiService.Controllers;
-
 using Carter;
 using ContactsApi.Data;
-using ContactsApi.Models;
 using ContactsApi.Services;
 using Microsoft.EntityFrameworkCore;
-using Aspire.Npgsql;
+using Scalar.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCarter();
 builder.Services.AddScoped<IContactService, ContactServiceImpl>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddControllers();
 
@@ -27,13 +25,8 @@ builder.Services.AddCors(options =>
 		policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
 	});
 });
-
-// builder.Services.AddCarter(configurator: c =>
-//     {
-//         c.WithResponseNegotiator<CustomResponseNegotiator>();
-//         c.WithModule<MyModule>();
-//         c.WithValidator<TestModelValidator>();
-//     });
+// // Add Aspire service defaults
+builder.AddServiceDefaults();
 
 var databaseName = "contactsdb";
 builder.AddNpgsqlDataSource(connectionName: databaseName);
@@ -49,7 +42,8 @@ if (app.Environment.IsDevelopment())
 {
 	app.MapOpenApi();
 	app.UseSwagger();
-	app.UseSwaggerUI();
+	app.UseSwaggerUI(options => { options.SwaggerEndpoint("/openapi/v1.json", "OpenAPI v1"); });
+	app.MapScalarApiReference();
 }
 
 // app.UseHttpsRedirection();
@@ -61,9 +55,8 @@ app.MapControllers();
 app.UseCors();
 app.MapCarter();
 
-
-// app.MapDefaultEndpoints();
-
+// Map Aspire default endpoints
+app.MapDefaultEndpoints();
 
 using (var scope = app.Services.CreateScope())
 {
