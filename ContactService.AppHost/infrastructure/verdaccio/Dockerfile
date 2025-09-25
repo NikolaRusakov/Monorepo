@@ -1,4 +1,5 @@
-FROM verdaccio/verdaccio:6
+# TODO: Wait until outage is resolved, https://www.dockerstatus.com/pages/533c6539221ae15e3f000031
+FROM public.ecr.aws/docplanner/verdaccio:5.8.0
 ADD docker.yaml /verdaccio/conf/config.yaml
 USER root
 RUN npm install --global verdaccio-static-token \

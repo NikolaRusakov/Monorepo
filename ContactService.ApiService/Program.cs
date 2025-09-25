@@ -2,7 +2,6 @@
 // using ContactService.ApiService.Controllers;
 
 using Carter;
-using ContactsApi.Data;
 using ContactsApi.Models;
 using ContactsApi.Services;
 using Microsoft.EntityFrameworkCore;
@@ -61,7 +60,7 @@ app.MapCarter();
 
 using (var scope = app.Services.CreateScope())
 {
-	var context = scope.ServiceProvider.GetRequiredService<ContactsDbContext>();
+	var context = scope.ServiceProvider.GetRequiredService<ContactsApi.Data.ContactsDbContext>();
 	context.Database.EnsureCreated();
 }
 
