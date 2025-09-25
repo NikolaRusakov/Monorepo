@@ -1,12 +1,3 @@
-public interface IUserService
-{
-    Task<IEnumerable<User>> GetAllUsersAsync();
-    Task<User?> GetUserByIdAsync(int id);
-    Task<User> CreateUserAsync(User user);
-}
-
-
-
 public class UserService : IUserService
 {
 	private static readonly List<User> _users = new()

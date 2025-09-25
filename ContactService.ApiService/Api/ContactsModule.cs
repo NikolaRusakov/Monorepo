@@ -1,6 +1,5 @@
 using Carter;
 using ContactsApi.Models;
-using ContactsApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContactsApi.Modules;

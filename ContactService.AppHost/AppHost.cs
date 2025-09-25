@@ -3,7 +3,8 @@ var builder = DistributedApplication.CreateBuilder(args);
 
 
 var postgres = builder.AddPostgres("postgres"/* , username, password */)
-                      .WithPgAdmin(pgAdmin => pgAdmin.WithHostPort(5050)); ;
+                      .WithPgAdmin(pgAdmin => pgAdmin.WithHostPort(5050))
+                      .WithLifetime(ContainerLifetime.Persistent);
 var databaseName = "contactsdb";
 
 var creationScript = $$"""
