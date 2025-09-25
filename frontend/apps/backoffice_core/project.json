@@ -1,43 +1,72 @@
 {
   "name": "backoffice_core",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "application",
-  "prefix": "app",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/backoffice_core/src",
+  "projectType": "application",
   "tags": [],
   "targets": {
-    "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
-      "options": {
-        "buildTarget": "backoffice_core:build"
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint"
-    },
-    "serve-static": {
-      "continuous": true,
-      "executor": "@nx/web:file-server",
+    "build": {
+      "executor": "@nx/rspack:rspack",
+      "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "buildTarget": "backoffice_core:build",
-        "port": 4201,
-        "watch": false
+        "target": "web",
+        "outputPath": "dist/backoffice_core",
+        "index": "apps/backoffice_core/src/index.html",
+        "main": "apps/backoffice_core/src/main.ts",
+        "tsConfig": "apps/backoffice_core/tsconfig.app.json",
+        "rspackConfig": "apps/backoffice_core/rspack.config.ts",
+        "assets": [
+          "apps/backoffice_core/src/favicon.ico",
+          "apps/backoffice_core/src/assets"
+        ]
       },
       "configurations": {
         "development": {
-          "buildTarget": "backoffice_core:build:development"
+          "mode": "development"
         },
+        "production": {
+          "mode": "production",
+          "optimization": true,
+          "sourceMap": false,
+          "rspackConfig": "apps/backoffice_core/rspack.config.prod.ts"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/rspack:module-federation-dev-server",
+      "options": {
+        "buildTarget": "backoffice_core:build:development",
+        "port": 4200
+      },
+      "configurations": {
+        "development": {},
         "production": {
           "buildTarget": "backoffice_core:build:production"
         }
       }
     },
-    "serve": {
+    "serve-static": {
+      "executor": "@nx/rspack:module-federation-static-server",
+      "defaultConfiguration": "production",
       "options": {
-        "port": 4201
+        "serveTarget": "backoffice_core:serve"
       },
-      "dependsOn": ["host:serve"]
+      "configurations": {
+        "development": {
+          "serveTarget": "backoffice_core:serve:development"
+        },
+        "production": {
+          "serveTarget": "backoffice_core:serve:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/backoffice_core/jest.config.ts"
+      }
     }
   }
 }

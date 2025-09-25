@@ -1,65 +1,20 @@
-import { createConfig } from '@nx/angular-rspack';
-import baseWebpackConfig from './webpack.config';
-import webpackMerge from 'webpack-merge';
+import { composePlugins, withNx, withReact } from '@nx/rspack';
+import { withModuleFederation } from '@nx/module-federation/rspack';
 
-export default async () => {
-  const baseConfig = await createConfig(
-    {
-      options: {
-        root: __dirname,
+import baseConfig from './module-federation.config';
 
-        outputPath: {
-          base: '../../dist/apps/backoffice_core',
-        },
-        index: './src/index.html',
-        browser: './src/main.ts',
-        polyfills: ['zone.js'],
-        tsConfig: './tsconfig.app.json',
-        inlineStyleLanguage: 'scss',
-        assets: [
-          {
-            glob: '**/*',
-            input: './public',
-          },
-        ],
-        styles: ['./src/styles.scss'],
-        devServer: {
-          port: 4201,
-          publicHost: 'http://localhost:4201',
-        },
-      },
-    },
-    {
-      production: {
-        options: {
-          budgets: [
-            {
-              type: 'initial',
-              maximumWarning: '500kb',
-              maximumError: '1mb',
-            },
-            {
-              type: 'anyComponentStyle',
-              maximumWarning: '4kb',
-              maximumError: '8kb',
-            },
-          ],
-          outputHashing: 'all',
-          devServer: {},
-        },
-      },
-
-      development: {
-        options: {
-          optimization: false,
-          vendorChunk: true,
-          extractLicenses: false,
-          sourceMap: true,
-          namedChunks: true,
-          devServer: {},
-        },
-      },
-    }
-  );
-  return webpackMerge(baseConfig[0], baseWebpackConfig);
+const config = {
+  ...baseConfig,
 };
+
+// Nx plugins for rspack to build config object from Nx options and context.
+/**
+ * DTS Plugin is disabled in Nx Workspaces as Nx already provides Typing support Module Federation
+ * The DTS Plugin can be enabled by setting dts: true
+ * Learn more about the DTS Plugin here: https://module-federation.io/configure/dts.html
+ */
+export default composePlugins(
+  withNx(),
+  withReact(),
+  withModuleFederation(config, { dts: false }),
+);
