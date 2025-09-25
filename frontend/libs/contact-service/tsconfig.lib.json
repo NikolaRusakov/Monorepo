@@ -23,5 +23,5 @@
     "src/**/*.test.jsx",
     "src/**/*.spec.jsx"
   ],
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "src/lib/orval/add-version.js"]
 }
