@@ -38,21 +38,10 @@ export const appRoutes: Route[] = [
       elementName: 'http-mfe-react-element',
     } as WebComponentWrapperOptions,
   },
-  // {
-  //   path: '',
-  //   loadChildren: () =>
-  //     loadRemote<typeof import('backoffice_core/Routes')>(
-  //       'backoffice_core/Routes'
-  //     ).then((m) => {
-  //       console.log('module', m);
-  //       //@ts-ignore
-  //       return m!.default;
-  //     }),
-  // },
   {
-    path:'contacts',
+    path: 'contacts',
     loadComponent: () =>
-      import('./infrastructure/contacts/table.component').then(
+      import('./infrastructure/contacts/contact-overview.component').then(
         (c) => c.default
       ),
   },
