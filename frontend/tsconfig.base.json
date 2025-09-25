@@ -14,7 +14,14 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@doto-solutions/angular-contact-service": [
+        "libs/contact-service/src/index.ts"
+      ],
+      "backoffice_core/Routes": [
+        "apps/backoffice_core/src/app/remote-entry/entry.routes.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

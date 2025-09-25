@@ -1,0 +1,48 @@
+{
+  "version": "1.0.0",
+  "configurations": [
+    {
+      "name": "Launch Project",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-solution",
+      "program": "${workspaceFolder}/src/${workspaceFolderBasename}.${input:projectType}/bin/Debug/net9.0/${workspaceFolderBasename}.${input:projectType}.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "https://localhost:7001;http://localhost:5001",
+        "ASPIRE_DASHBOARD_OTLP_ENDPOINT_URL": "http://localhost:18889",
+        "ASPIRE_DASHBOARD_OTLP_HTTP_ENDPOINT_URL": "http://localhost:18890",
+        "DOTNET_ENVIRONMENT": "Development",
+        "ASPIRE_RESOURCE_SERVICE_ENDPOINT_URL": "http://localhost:20281",
+        "ASPIRE_DASHBOARD_GRPC_TIMEOUT": "300",
+        "ASPIRE_DASHBOARD_HTTP_TIMEOUT": "300",
+        "ASPIRE_ALLOW_UNSECURED_TRANSPORT": "true",
+        "DOTNET_SYSTEM_NET_HTTP_SOCKETSHTTPHANDLER_HTTP2UNENCRYPTEDSUPPORT": "true"
+      },
+      "justMyCode": false,
+      "requireExactSource": false,
+      "enableStepFiltering": false
+    },
+    {
+      "name": "Attach to Process",
+      "type": "coreclr",
+      "request": "attach"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "projectType",
+      "description": "Select project type to launch",
+      "type": "pickString",
+      "options": ["API", "AppHost"]
+    }
+  ]
+}

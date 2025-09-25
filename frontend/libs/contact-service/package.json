@@ -1,0 +1,12 @@
+{
+  "name": "@doto-solutions/angular-contact-service",
+  "version": "0.0.0",
+  "peerDependencies": {
+    "@angular/common": "^20.2.0",
+    "@angular/core": "^20.2.0",
+    "orval": "^7.11.2",
+    "@orval/core": "7.11.2",
+    "@faker-js/faker": "10.0.0"
+  },
+  "sideEffects": false
+}
