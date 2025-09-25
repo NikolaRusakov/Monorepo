@@ -1,0 +1,68 @@
+storage: /verdaccio/storage
+
+store:
+  minio:
+    # The HTTP port of your minio instance
+    port: 9000
+
+    # The endpoint on which verdaccio will access minio (without scheme)
+    endPoint: minio:9000
+
+    # The minio access key
+    accessKey: minioadmin
+
+    # The minio secret key
+    secretKey: minioadmin
+
+    # Disable SSL if you're accessing minio directly through HTTP
+    useSSL: false
+
+    # The region used by your minio instance (optional, default to "us-east-1")
+    region: us-east-1
+
+    # A bucket where verdaccio will store it's database & packages (optional, default to "verdaccio")
+    bucket: 'doto'
+
+    # Number of retry when a request to minio fails (optional, default to 10)
+    retries: 3
+
+    # Delay between retries (optional, default to 100)
+    delay: 50
+    
+    # proxy: http://localhost:8080
+
+uplinks:
+  npmjs:
+    url: https://registry.npmjs.org/
+    # url: https://registry.verdaccio.org/
+
+packages:
+  '@doto/*':
+    access: all
+    publish: $all
+    storage: 'private'
+
+  '@doto-solutions/*':
+    access: all
+    publish: $all
+    storage: 'private'
+  '@*/*':
+    access: $all
+    publish: $all
+    proxy: npmjs
+    storage: 'public'
+  '**':
+    access: $all
+    publish: $all
+    proxy: npmjs
+    storage: 'public'
+logs:
+  - {type: stdout, format: pretty, level: http}
+
+listen:
+  - 0.0.0.0:4873
+
+auth:
+  htpasswd:
+  # user - password
+    file: ./htpasswd
