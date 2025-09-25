@@ -26,7 +26,14 @@ import {
 
 import type {
   User
-} from '../../model';
+} from '../model';
+
+import {
+  HttpResponse,
+  delay,
+  http
+} from 'msw';
+
 
 
 
@@ -88,3 +95,39 @@ export class UserModuleService {
 export type GetApiUsersClientResult = never;
 export type PostApiUsersClientResult = never;
 export type GetApiUsersIdClientResult = never;
+
+
+
+export const getGetApiUsersMockHandler = (overrideResponse?: null | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<null> | null)) => {
+  return http.get('*/api/users', async (info) => {await delay(1000);
+  if (typeof overrideResponse === 'function') {await overrideResponse(info); }
+    return new HttpResponse(null,
+      { status: 200,
+        
+      })
+  })
+}
+
+export const getPostApiUsersMockHandler = (overrideResponse?: null | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<null> | null)) => {
+  return http.post('*/api/users', async (info) => {await delay(1000);
+  if (typeof overrideResponse === 'function') {await overrideResponse(info); }
+    return new HttpResponse(null,
+      { status: 200,
+        
+      })
+  })
+}
+
+export const getGetApiUsersIdMockHandler = (overrideResponse?: null | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<null> | null)) => {
+  return http.get('*/api/users/:id', async (info) => {await delay(1000);
+  if (typeof overrideResponse === 'function') {await overrideResponse(info); }
+    return new HttpResponse(null,
+      { status: 200,
+        
+      })
+  })
+}
+export const getUserModuleMock = () => [
+  getGetApiUsersMockHandler(),
+  getPostApiUsersMockHandler(),
+  getGetApiUsersIdMockHandler()]

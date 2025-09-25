@@ -26,7 +26,14 @@ import {
 
 import type {
   Product
-} from '../../model';
+} from '../model';
+
+import {
+  HttpResponse,
+  delay,
+  http
+} from 'msw';
+
 
 
 
@@ -113,3 +120,61 @@ export type PostApiProductsClientResult = never;
 export type GetApiProductsIdClientResult = never;
 export type PutApiProductsIdClientResult = never;
 export type DeleteApiProductsIdClientResult = never;
+
+
+
+export const getGetApiProductsMockHandler = (overrideResponse?: null | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<null> | null)) => {
+  return http.get('*/api/products', async (info) => {await delay(1000);
+  if (typeof overrideResponse === 'function') {await overrideResponse(info); }
+    return new HttpResponse(null,
+      { status: 200,
+        
+      })
+  })
+}
+
+export const getPostApiProductsMockHandler = (overrideResponse?: null | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<null> | null)) => {
+  return http.post('*/api/products', async (info) => {await delay(1000);
+  if (typeof overrideResponse === 'function') {await overrideResponse(info); }
+    return new HttpResponse(null,
+      { status: 200,
+        
+      })
+  })
+}
+
+export const getGetApiProductsIdMockHandler = (overrideResponse?: null | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<null> | null)) => {
+  return http.get('*/api/products/:id', async (info) => {await delay(1000);
+  if (typeof overrideResponse === 'function') {await overrideResponse(info); }
+    return new HttpResponse(null,
+      { status: 200,
+        
+      })
+  })
+}
+
+export const getPutApiProductsIdMockHandler = (overrideResponse?: null | ((info: Parameters<Parameters<typeof http.put>[1]>[0]) => Promise<null> | null)) => {
+  return http.put('*/api/products/:id', async (info) => {await delay(1000);
+  if (typeof overrideResponse === 'function') {await overrideResponse(info); }
+    return new HttpResponse(null,
+      { status: 200,
+        
+      })
+  })
+}
+
+export const getDeleteApiProductsIdMockHandler = (overrideResponse?: null | ((info: Parameters<Parameters<typeof http.delete>[1]>[0]) => Promise<null> | null)) => {
+  return http.delete('*/api/products/:id', async (info) => {await delay(1000);
+  if (typeof overrideResponse === 'function') {await overrideResponse(info); }
+    return new HttpResponse(null,
+      { status: 200,
+        
+      })
+  })
+}
+export const getProductModuleMock = () => [
+  getGetApiProductsMockHandler(),
+  getPostApiProductsMockHandler(),
+  getGetApiProductsIdMockHandler(),
+  getPutApiProductsIdMockHandler(),
+  getDeleteApiProductsIdMockHandler()]

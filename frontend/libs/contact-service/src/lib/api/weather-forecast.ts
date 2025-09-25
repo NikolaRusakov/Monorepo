@@ -26,7 +26,18 @@ import {
 
 import type {
   WeatherForecast
-} from '.././model';
+} from '../model';
+
+import {
+  faker
+} from '@faker-js/faker';
+
+import {
+  HttpResponse,
+  delay,
+  http
+} from 'msw';
+
 
 
 
@@ -67,3 +78,21 @@ export class WeatherForecastService {
 };
 
 export type GetWeatherForecastClientResult = NonNullable<WeatherForecast[]>;
+
+
+export const getGetWeatherForecastResponseMock = (): WeatherForecast[] => (Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({date: faker.helpers.arrayElement([faker.date.past().toISOString().split('T')[0], undefined]), temperatureC: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined, multipleOf: undefined}), undefined]), temperatureF: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined, multipleOf: undefined}), undefined]), summary: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), null]), undefined])})))
+
+
+export const getGetWeatherForecastMockHandler = (overrideResponse?: WeatherForecast[] | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<WeatherForecast[]> | WeatherForecast[])) => {
+  return http.get('*/WeatherForecast', async (info) => {await delay(1000);
+  
+    return new HttpResponse(overrideResponse !== undefined
+    ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse)
+    : getGetWeatherForecastResponseMock(),
+      { status: 200,
+        headers: { 'Content-Type': 'text/plain' }
+      })
+  })
+}
+export const getWeatherForecastMock = () => [
+  getGetWeatherForecastMockHandler()]

@@ -38,36 +38,26 @@ export const appRoutes: Route[] = [
       elementName: 'http-mfe-react-element',
     } as WebComponentWrapperOptions,
   },
-  {
-    path: '',
-    loadChildren: () =>
-      loadRemote<typeof import('backoffice_core/Routes')>(
-        'backoffice_core/Routes'
-      ).then((m) => {
-        console.log('module', m);
-        //@ts-ignore
-        return m!.default;
-      }),
-  },
   // {
   //   path: '',
-
   //   loadChildren: () =>
-  //     loadRemoteModule({
-  //       type: 'module',
-  //       remoteEntry: 'http://localhost:4200/remoteEntry.js',
-  //       exposedModule: './core',
-  //     }).then((m) => {
+  //     loadRemote<typeof import('backoffice_core/Routes')>(
+  //       'backoffice_core/Routes'
+  //     ).then((m) => {
   //       console.log('module', m);
-  //       return m.App;
+  //       //@ts-ignore
+  //       return m!.default;
   //     }),
   // },
+  {
+    path:'contacts',
+    loadComponent: () =>
+      import('./infrastructure/contacts/table.component').then(
+        (c) => c.default
+      ),
+  },
   // {
   //   path: '',
-  //   loadRemoteModule('backoffice_core', './Routes').then((m) => m.remoteRoutes),
+  //   component: NxWelcome,
   // },
-  {
-    path: '',
-    component: NxWelcome,
-  },
 ];

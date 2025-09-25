@@ -15,7 +15,10 @@
     "@angular/forms": "~20.2.0",
     "@angular/platform-browser": "~20.2.0",
     "@angular/router": "~20.2.0",
+    "@doto-solutions/angular-contact-service": "^0.0.0",
+    "@faker-js/faker": "^10.0.0",
     "@nx/angular": "21.5.3",
+    "@orval/core": "^7.11.2",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "rxjs": "~7.8.0",
@@ -98,6 +101,10 @@
       "apps/frontend/public"
     ]
   },
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
   "nx": {
     "includedScripts": []
   }

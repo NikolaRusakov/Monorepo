@@ -1,8 +1,8 @@
 module.exports = {
   petstore: {
     output: {
-      mode: 'tags-split',
-      target: 'src/lib/api/api.ts',
+      mode: 'tags',
+      target: 'src/lib/api/index.ts',
       schemas: 'src/lib/model',
       client: 'angular',
       useInfiniteQueryParam: 'id',

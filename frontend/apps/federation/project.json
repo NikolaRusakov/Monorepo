@@ -41,6 +41,12 @@
               "maximumError": "8kb"
             }
           ],
+          "fileReplacements": [
+            {
+              "replace": "apps/federation/src/environments/environment.ts",
+              "with": "apps/federation/src/environments/environment.prod.ts"
+            }
+          ],
           "outputHashing": "all"
         },
         "development": {
@@ -49,7 +55,13 @@
           "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
-          "namedChunks": true
+          "namedChunks": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/federation/src/environments/environment.ts",
+              "with": "apps/federation/src/environments/environment.ts"
+            }
+          ]
         }
       },
       "defaultConfiguration": "production"
