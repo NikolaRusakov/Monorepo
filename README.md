@@ -18,9 +18,9 @@ to run a monorepo solution, following needs to be installed:
 nx run backoffice_core:serve --configuration=production --verbose
 ```
 
-- a Host Angular app consuming Module Federation micro frontend, run with fedaration:serve:development with 
+- a Host Angular app consuming Module Federation micro frontend, run with federation:serve:development with 
 ```bash
-nx run fedaration:serve --configuration=development --verbose
+nx run federation:serve --configuration=development --verbose
 ```
 
 #### For Back End run
@@ -118,7 +118,7 @@ With that, it's possible to run [Verdaccio private npm proxy registry](https://v
 1. Module Federation - allowing Vertical Team Slices and decoupling of front end services
 1. Vitest and [Vitest Browser](https://vitest.dev/guide/browser/) + [Playwright](https://playwright.dev/) testing - allowing running one runner utilising inline unit tests and multi framework stack, while improving overall test suite performance
 1. Testing Library & MSW.js - running component and integration tests smoothly while testing real DOM elements including ARIA accessibility and component inputs
-1. Contract driven development - using again using Angular Testing Library, MSW.js and API generated client allows for independent development and testing features
+1. Contract driven development - using again Angular Testing Library, MSW.js and API generated client allows for independent development and testing features
 1. Generated api and environment based configuration - build time env variables decide API URL with Http interceptor
 1. Verdaccio - private package publishing and testing
 1. exporting end to end testing reporting as Junit https://github.com/NikolaRusakov/Monorepo/blob/272a164c00f1822556adf31a624d00c5ebc4a20f/frontend/apps/frontend/project.json#L22- deploys directly to azure DevOps and allows for deep integrations with project management  
